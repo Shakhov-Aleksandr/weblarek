@@ -177,3 +177,27 @@ interface IBuyer {
 `countItems(): number` - метод для получения количества товаров в корзине
 
 `isInBascet (id : string): boolean` - метод для проверки наличия товара в корзине по его id, полученному в параметр метода 
+
+### Класс Buyer
+Экземпляр класса служит для хранения данных, необходимых для оформления покупки
+
+Конструктор: нет 
+
+Поля класса:  
+`protected payment: TPayment` - поле "Способ оплаты"
+`protected address: string` - поле "Адресс"
+`protected email: string` - поле "Электронная почта"
+`protected phone: string` - поле "Номер"
+
+Методы:  
+`setPayment(value: TPayment)`, `set(Address/Email/Phone)(value: string)` - методы для сохранения данных в соответствующие поля
+
+`getPayment():TPayment`, `get(Address/Email/Phone): string` - методы для получения данных из соответствующих полей
+
+`clear()` - очистка полей
+
+`validation(): object` - валидация  полей
+
+`getOrderData()` - метод для получения значени йполе класса Buyer
+
+`clear()` - метод для очистки поле класса Buyer
