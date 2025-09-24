@@ -2,24 +2,21 @@ import {IProduct} from '../../../types/index.ts';
 
 
 export class Basket {
-    protected goodsOnBascet : IProduct[] = [];
+    protected goodsOnBascet: IProduct[] = [];
 
-    setItemToBascet(good : IProduct) {
-        console.log("Товар добавлен в корзину");
+    setItemToBascet(good: IProduct) {
         this.goodsOnBascet.push(good);
     }
 
-    getItemsFromBascet() : IProduct[] {
-        // console.log("Содержимое казины:");
+    getItemsFromBascet(): IProduct[] {
         return this.goodsOnBascet;
     }
 
-    removeItemFromBascet(good : IProduct) {
+    removeItemFromBascet(good: IProduct) {
         this.goodsOnBascet = this.goodsOnBascet.filter(item => item.id !== good.id);
     }
 
     clearBascet() {
-        console.log("Корзина очищена");
         this.goodsOnBascet = [];
     }
 
