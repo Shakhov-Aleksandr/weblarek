@@ -2,7 +2,7 @@ import {IProduct} from '../../../types/index.ts';
 
 
 export class Basket {
-    protected goodsOnBascet: IProduct[] = [];
+    private goodsOnBascet: IProduct[] = [];
 
     setItemToBascet(good: IProduct) {
         this.goodsOnBascet.push(good);
@@ -19,15 +19,14 @@ export class Basket {
     clearBascet() {
         this.goodsOnBascet = [];
     }
-
+ 
     calculateSumm(): number {
-    let totalSum = 0;
-    this.goodsOnBascet.forEach(good => {
-        if (good.price !== null) {
+        let totalSum = 0;
+        this.goodsOnBascet.forEach(good => {
+            if (good.price !== null) {
             totalSum += good.price;
-        }
-    });
-    return totalSum;
+        }});
+        return totalSum;
     }
 
     countItems(): number {

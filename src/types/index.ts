@@ -23,3 +23,7 @@ export interface IBuyer {
   address?: string;
 }
 
+export interface IOrderResponse {
+  id: string;
+  total: number
+}

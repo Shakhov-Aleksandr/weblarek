@@ -1,31 +1,6 @@
-// import {IApi} from '../../types/index';
-
-export interface IApi {
-    get<T extends object>(uri: string): Promise<T>;
-    post<T extends object>(uri: string, data: object, method?: ApiPostMethods): Promise<T>;
-}
-
-export interface IProduct {
-  id: string;
-  description: string;
-  image: string;
-  title: string;
-  category: string;
-  price: number | null;
-}
+import {IApi, IProduct, IBuyer, IOrderResponse} from '../../types/index';
 
 type ApiPostMethods = 'POST' | 'PUT' | 'DELETE';
-export interface IItem {
-    id: string;
-    itemIndex: number;
-    category: TItemCategory;
-    description: string;
-    image: string;
-    price: TItemPrice;
-    title: string;
-}
-export type TItemCategory = 'софт-скил' | 'хард-скил' | 'другое' | 'кнопка' | 'дополнительное';
-export type TItemPrice = number | null;
 
 export class Requests {
     private api: IApi;
@@ -47,26 +22,7 @@ export class Requests {
 		};
   		return this.api.post<IOrderResponse>('/order', payload);
 	}
-
 }
-
-export type TPayment = 'card' | 'cash' | null;
-
-
-export interface IBuyer {
-  payment?: TPayment;
-  email?: string;
-  phone?: string;
-  address?: string;
-}
-
-
-export interface IOrderResponse {
-  id: string;
-  total: number
-}
-
-
 
 export class Api {
     readonly baseUrl: string;

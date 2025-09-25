@@ -14,98 +14,102 @@ const list = new Products();
 list.setItems(apiProducts.items);
 
 // getItems - метод для получение массива товаров из модели
-console.log('1 Массив товаров из каталога: ', list.getItems());
+console.log('\n 1 Массив товаров из каталога: ', list.getItems());
 
 // findGoodByID - метод получение одного товара по его id
-console.log('2 Найден товар с ID из главной страницы: ', list.findGoodByID("c101ab44-ed99-4a54-990d-47aa2bb4e7d9"));
+console.log('\n 2 Найден товар с ID из главной страницы: ', list.findGoodByID("c101ab44-ed99-4a54-990d-47aa2bb4e7d9"));
 
 // setToShow - метод для сохранения товара для подробного отображения
 list.setToShow(list.findGoodByID("c101ab44-ed99-4a54-990d-47aa2bb4e7d9"));
-console.log('3 Товар сохранен для подробного отображения');
+console.log('\n 3 Товар сохранен для подробного отображения: ', list.findGoodByID("c101ab44-ed99-4a54-990d-47aa2bb4e7d9"));
 
 // getToShow - метод для получение товара для подробного отображения
-console.log('4 Вывод товара с подробностями:', list.getToShow());
+console.log('\n 4 Вывод товара для подробного отображения: ', list.getToShow());
 
-console.log('ТЕСТ КЛАССА Basket');
+
+
+console.log('\n\n\nТЕСТ КЛАССА Basket');
 const basket = new Basket();
 // setItemToBascet -  метод для добавления товара, который был получен в параметре в массив корзины
+basket.setItemToBascet(list.findGoodByID("c101ab44-ed99-4a54-990d-47aa2bb4e7d9"));
+console.log('1 Товар добавлен в корзину:', list.findGoodByID("c101ab44-ed99-4a54-990d-47aa2bb4e7d9"));
 basket.setItemToBascet(list.findGoodByID("854cef69-976d-4c2a-a18c-2aa45046c390"));
-console.log('1 Товар добавлен в корзину');
+console.log('1 Товар добавлен в корзину:', list.findGoodByID("854cef69-976d-4c2a-a18c-2aa45046c390"));
 
 // getItemsFromBascet - метод для получения товаров, которые находятся в корзине
-console.log("2 Содержимое корзины", basket.getItemsFromBascet());
+console.log("\n2 Содержимое корзины", basket.getItemsFromBascet());
 
 // removeItemFromBascet - метод для удаления товара, полученного в параметре из массива корзины
 basket.removeItemFromBascet(list.findGoodByID("854cef69-976d-4c2a-a18c-2aa45046c390"));
-console.log('3 Товар удален из корзины');
+console.log('\n3 Товар удален из корзины:', list.findGoodByID("854cef69-976d-4c2a-a18c-2aa45046c390"));
 console.log("3 Содержимое корзины", basket.getItemsFromBascet());
 
-// clearBascet - метод для очистки корзины
-basket.setItemToBascet(list.findGoodByID("c101ab44-ed99-4a54-990d-47aa2bb4e7d9"));
-console.log("4 Содержимое корзины", basket.getItemsFromBascet());
-
-basket.setItemToBascet(list.findGoodByID("412bcf81-7e75-4e70-bdb9-d3c73c9803b7"));
-console.log("4 Содержимое корзины", basket.getItemsFromBascet());
-
-basket.clearBascet();
-console.log('4 Корзина очищена');
-console.log("4 Содержимое корзины", basket.getItemsFromBascet());
-
 // calculateSumm - метод для подсчета суммы 
-basket.setItemToBascet(list.findGoodByID("854cef69-976d-4c2a-a18c-2aa45046c390"));
-console.log("Сумма заказа: ", basket.calculateSumm());
+console.log("4 Сумма заказа: ", basket.calculateSumm());
+
+// clearBascet - метод для очистки корзины
+basket.clearBascet();
+console.log("\n5 Корзина очищена");
+console.log("5 Содержимое корзины", basket.getItemsFromBascet());
 
 // countItems - метод для получения количества товаров в корзине
-console.log("Количество товаров в корзине: ", basket.countItems());
+console.log("\n6 Количество товаров в корзине: ", basket.countItems());
 
 // isInBascet - метод для проверки наличия товара в корзине по его id, полученному в параметр метода 
-console.log("Товар в корзине: ", basket.isInBascet("854cef69-976d-4c2a-a18c-2aa45046c390"));
+console.log("\n7 Товар в корзине: ", basket.isInBascet("854cef69-976d-4c2a-a18c-2aa45046c390"));
 
 
+
+console.log('\n\n\nТЕСТ КЛАССА Buyer');
 const buyer = new Buyer();
 // set(Payment/Address/Email/Phone) - методы для сохранения данных в соответствующие поля
 buyer.setPayment("cash");
+console.log("1 Проверка валидации: " , buyer.validation());
 buyer.setAddress("Night");
 buyer.setEmail("@");
 buyer.setPhone("89");
 
 // get(Payment/Address/Email/Phone) - методы для получения данных из соответствующих полей
-console.log(buyer.getAddress());
-console.log(buyer.getEmail());
-console.log(buyer.getPayment());
-console.log(buyer.getPhone());
+console.log('\n2 Вывод данных по отдельности');
+console.log("Адрес: " , buyer.getAddress());
+console.log("Почта: ", buyer.getEmail());
+console.log("Способ оплаты: ", buyer.getPayment());
+console.log("Телефон: ", buyer.getPhone());
 
 // getOrderData - метод для получения значений поле класса Buyer
-console.log(buyer.getOrderData());
+console.log("\n3 Вывод всех данных: ", buyer.getOrderData());
 
 // clear - метод для очистки поле класса Buyer
 buyer.clear();
-console.log(buyer.getOrderData());
+console.log("\n4 Данные очищены: ", buyer.getOrderData());
 
 
-
-const apiTest = new Products()
-
+console.log('\n\n\nТЕСТ КЛАССА Requests');
+const productsFromServer = new Products()
+const newBascet = new Basket();
 const api = new Api(API_URL);
 const testApi = new Requests(api);
-const log = testApi.getGoods();
-console.log('log', log);
+const products = testApi.getGoods();
 
-
-await log.then(res => {
-  apiTest.setItems(res);
+await products.then(res => {
+  productsFromServer.setItems(res);
 });
 
-  console.log(apiTest.getItems());
-
+console.log("Товары с сервера: ", productsFromServer.getItems());
 
 buyer.setPayment("cash");
 buyer.setAddress("Night");
 buyer.setEmail("@");
 buyer.setPhone("89");
 
-console.log("Сумма заказа: ", basket.calculateSumm());
-console.log("Содержимое корзины", basket.getItemsFromBascet());
+newBascet.setItemToBascet(list.findGoodByID("c101ab44-ed99-4a54-990d-47aa2bb4e7d9"));
+console.log("Товары в корзине: ", newBascet.getItemsFromBascet());
+console.log("Сумма заказа: ", newBascet.calculateSumm());
 
+const resultFromServer = testApi.postOrder(buyer.getOrderData(), newBascet.getItemsFromBascet(), newBascet.calculateSumm());
+await resultFromServer.then(res => {
+  console.log("\n Сервер вернул сообщение:");
 
-console.log(testApi.postOrder(buyer.getOrderData(), basket.getItemsFromBascet(), basket.calculateSumm()))
+  console.log("ID заказа: ", res.id);
+  console.log("Сумма заказа: ", res.total);
+});

@@ -52,7 +52,6 @@ export class Buyer {
         if (!this.phone) {
             error.phone = "Необходимо указать номер телефона";
         }  
-
         return error;
     }
 }
