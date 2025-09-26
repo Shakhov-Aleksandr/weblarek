@@ -1,28 +1,33 @@
-import {IProduct} from '../../../types/index.ts';
+import {IProduct, IBascet} from '../../../types/index.ts';
 
 
 export class Basket {
-    private goodsOnBascet: IProduct[] = [];
+    private goods: IProduct[] = [];
 
-    setItemToBascet(good: IProduct) {
-        this.goodsOnBascet.push(good);
+    setItem(good: IProduct) {
+        this.goods.push(good);
     }
 
-    getItemsFromBascet(): IProduct[] {
-        return this.goodsOnBascet;
+    getItems(): IBascet[] {
+        let bascet: IBascet[] = [];
+        this.goods.forEach(element => {
+            bascet.push({id: element.id, title: element.title, price: element.price });
+        });
+        return bascet;
+    }
+ 
+
+    removeItem(good: IProduct) {
+        this.goods = this.goods.filter(item => item.id !== good.id);
     }
 
-    removeItemFromBascet(good: IProduct) {
-        this.goodsOnBascet = this.goodsOnBascet.filter(item => item.id !== good.id);
-    }
-
-    clearBascet() {
-        this.goodsOnBascet = [];
+    clear() {
+        this.goods = [];
     }
  
     calculateSumm(): number {
         let totalSum = 0;
-        this.goodsOnBascet.forEach(good => {
+        this.goods.forEach(good => {
             if (good.price !== null) {
             totalSum += good.price;
         }});
@@ -30,13 +35,11 @@ export class Basket {
     }
 
     countItems(): number {
-        return this.goodsOnBascet.length;
+        return this.goods.length;
     }
 
     isInBascet (id : string): boolean  {
-        if (this.goodsOnBascet.find(good => good.id === id))  return true
+        if (this.goods.find(good => good.id === id))  return true
         else return false;
-    }
-
-    
+    }    
 }

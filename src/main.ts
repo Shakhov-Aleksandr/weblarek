@@ -31,26 +31,26 @@ console.log('\n 4 Вывод товара для подробного отобр
 console.log('\n\n\nТЕСТ КЛАССА Basket');
 const basket = new Basket();
 // setItemToBascet -  метод для добавления товара, который был получен в параметре в массив корзины
-basket.setItemToBascet(list.findGoodByID("c101ab44-ed99-4a54-990d-47aa2bb4e7d9"));
+basket.setItem(list.findGoodByID("c101ab44-ed99-4a54-990d-47aa2bb4e7d9"));
 console.log('1 Товар добавлен в корзину:', list.findGoodByID("c101ab44-ed99-4a54-990d-47aa2bb4e7d9"));
-basket.setItemToBascet(list.findGoodByID("854cef69-976d-4c2a-a18c-2aa45046c390"));
+basket.setItem(list.findGoodByID("854cef69-976d-4c2a-a18c-2aa45046c390"));
 console.log('1 Товар добавлен в корзину:', list.findGoodByID("854cef69-976d-4c2a-a18c-2aa45046c390"));
 
 // getItemsFromBascet - метод для получения товаров, которые находятся в корзине
-console.log("\n2 Содержимое корзины", basket.getItemsFromBascet());
+console.log("\n2 Содержимое корзины", basket.getItems());
 
 // removeItemFromBascet - метод для удаления товара, полученного в параметре из массива корзины
-basket.removeItemFromBascet(list.findGoodByID("854cef69-976d-4c2a-a18c-2aa45046c390"));
+basket.removeItem(list.findGoodByID("854cef69-976d-4c2a-a18c-2aa45046c390"));
 console.log('\n3 Товар удален из корзины:', list.findGoodByID("854cef69-976d-4c2a-a18c-2aa45046c390"));
-console.log("3 Содержимое корзины", basket.getItemsFromBascet());
+console.log("3 Содержимое корзины", basket.getItems());
 
 // calculateSumm - метод для подсчета суммы 
 console.log("4 Сумма заказа: ", basket.calculateSumm());
 
 // clearBascet - метод для очистки корзины
-basket.clearBascet();
+basket.clear();
 console.log("\n5 Корзина очищена");
-console.log("5 Содержимое корзины", basket.getItemsFromBascet());
+console.log("5 Содержимое корзины", basket.getItems());
 
 // countItems - метод для получения количества товаров в корзине
 console.log("\n6 Количество товаров в корзине: ", basket.countItems());
@@ -102,11 +102,11 @@ buyer.setAddress("Night");
 buyer.setEmail("@");
 buyer.setPhone("89");
 
-newBascet.setItemToBascet(list.findGoodByID("c101ab44-ed99-4a54-990d-47aa2bb4e7d9"));
-console.log("Товары в корзине: ", newBascet.getItemsFromBascet());
+newBascet.setItem(list.findGoodByID("c101ab44-ed99-4a54-990d-47aa2bb4e7d9"));
+console.log("Товары в корзине: ", newBascet.getItems());
 console.log("Сумма заказа: ", newBascet.calculateSumm());
 
-const resultFromServer = testApi.postOrder(buyer.getOrderData(), newBascet.getItemsFromBascet(), newBascet.calculateSumm());
+const resultFromServer = testApi.postOrder(buyer.getOrderData(), newBascet.getItems(), newBascet.calculateSumm());
 await resultFromServer.then(res => {
   console.log("\n Сервер вернул сообщение:");
 

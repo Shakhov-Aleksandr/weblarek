@@ -16,6 +16,12 @@ export interface IProduct {
   price: number | null;
 }
 
+export interface IBascet {
+  index : number;
+  title: string;
+  price: number;
+}
+
 export interface IBuyer {
   payment?: TPayment;
   email?: string;
@@ -25,5 +31,7 @@ export interface IBuyer {
 
 export interface IOrderResponse {
   id: string;
-  total: number
+  total: number;
+  countNubmer: number;
 }
+
