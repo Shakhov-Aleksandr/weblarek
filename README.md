@@ -157,7 +157,7 @@ Presenter - презентер содержит основную логику п
 * Описание
 
 Также есть идентификатор товара. Первоначально пологалось, что список этих идентификаторов отправляется запросом на сервер.
-
+```
  interface IProduct {
   id: string;
   category: string;
@@ -166,21 +166,21 @@ Presenter - презентер содержит основную логику п
   price: number | null;
   description: string;
 }
-
+```
 ### Интерфейс "Покупатель"
 Для оформления заказа, от пользователя требуется заполнить формы, собирающие следующие данные:
 * Способ оплаты
 * Адрес доставки
 * Адрес электронной почты
 * Номер мобильного телефона
-
+```
 interface IBuyer {
   payment: TPayment;
   address: string;
   email: string;
   phone: string;
 }
-
+```
 ### Интерфейс "Товар в корзине"
 В корзине для одного товара выводятся следующие ланные:
 * Наименование
@@ -190,22 +190,23 @@ interface IBuyer {
 * id товара
 
 Порядковый номер было решено только отрисовывать в окне, не сохраняя значания 
-
+```
 interface IBascet {
   id: string;
   title: string;
   price: number | null;
 }
-
+```
 ### Интерфейс "Ответ от сервера"
 Данные возвращаются с сервера:
 * ID заказа
 * Сумма заказа
-
+```
 interface IOrderResponse {
   id: string;
   total: number
 }
+```
 <hr>
 
 
@@ -309,13 +310,13 @@ interface IOrderResponse {
 1. Вклассе Basket из наименований методов идалено "fromBasket"
 
 2. Добавлен интерфейс
-
+```
 interface IBascet {
   id: string;
   title: string;
   price: number | null;
 }
-
+```
 Этот интерфейс используют:
 * метод класса Basket - `getItems(): IBascet[]`
 * метод класса Requests - `postOrder(order: IBuyer, items: IBascet[], cost: number): Promise<IOrderResponse>`
