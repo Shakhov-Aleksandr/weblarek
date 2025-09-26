@@ -1,4 +1,4 @@
-import {IApi, IProduct, IBuyer, IOrderResponse} from '../../types/index';
+import {IApi, IProduct, IBuyer, IBascet, IOrderResponse} from '../../types/index';
 
 type ApiPostMethods = 'POST' | 'PUT' | 'DELETE';
 
@@ -14,7 +14,7 @@ export class Requests {
         .then((response) => response.items);
     }
    
-    postOrder(order: IBuyer, items: IProduct[], cost: number): Promise<IOrderResponse> {
+    postOrder(order: IBuyer, items: IBascet[], cost: number): Promise<IOrderResponse> {
 		const payload = {
     		...order,
             total: cost,

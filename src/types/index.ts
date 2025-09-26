@@ -17,9 +17,9 @@ export interface IProduct {
 }
 
 export interface IBascet {
-  index : number;
+  id: string;
   title: string;
-  price: number;
+  price: number | null;
 }
 
 export interface IBuyer {

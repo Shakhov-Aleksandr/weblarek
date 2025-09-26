@@ -91,9 +91,10 @@ const api = new Api(API_URL);
 const testApi = new Requests(api);
 const products = testApi.getGoods();
 
-await products.then(res => {
+products.then(res => {
   productsFromServer.setItems(res);
-});
+})
+.catch(err => console.log("Ошибка", err));
 
 console.log("Товары с сервера: ", productsFromServer.getItems());
 
@@ -107,9 +108,9 @@ console.log("Товары в корзине: ", newBascet.getItems());
 console.log("Сумма заказа: ", newBascet.calculateSumm());
 
 const resultFromServer = testApi.postOrder(buyer.getOrderData(), newBascet.getItems(), newBascet.calculateSumm());
-await resultFromServer.then(res => {
+resultFromServer.then(res => {
   console.log("\n Сервер вернул сообщение:");
 
   console.log("ID заказа: ", res.id);
   console.log("Сумма заказа: ", res.total);
-});
+}).catch(err => console.log("Ошибка", err));

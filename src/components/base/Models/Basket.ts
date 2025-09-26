@@ -11,7 +11,7 @@ export class Basket {
     getItems(): IBascet[] {
         let bascet: IBascet[] = [];
         this.goods.forEach(element => {
-            bascet.push({id: element.id, title: element.title, price: element.price });
+            bascet.push({id: element.id, title: element.title, price: element.price});
         });
         return bascet;
     }
