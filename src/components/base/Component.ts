@@ -27,6 +27,14 @@ export abstract class Component<T> {
 	}
 
 
+    // Для отрисовки содержимого корзины
+    setDisabled(element: HTMLElement, state: boolean) {
+		if (element) {
+			if (state) element.setAttribute('disabled', 'disabled');
+			else element.removeAttribute('disabled');
+		}
+	}
+
 
   	toggleClass(element: HTMLElement, className: string, force?: boolean) {
 		element.classList.toggle(className, force);

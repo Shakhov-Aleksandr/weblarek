@@ -1,6 +1,6 @@
-import {IEvents} from './base/Events.ts';
-import {ensureElement} from '../utils/utils.ts'
-import {Component} from './base/Component.ts';
+import {IEvents} from './Events.ts';
+import {ensureElement} from '../../utils/utils.ts'
+import {Component} from './Component.ts';
 
 
 export interface IPopup  {
@@ -46,10 +46,8 @@ export class Popup extends Component<IPopup>{
     }
 
     render(data: IPopup): HTMLElement {
-        console.log(data)
         super.render(data);
         this.open();
-        // console.log(this.container)
         return this.container;
     }
 }

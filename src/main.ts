@@ -2,20 +2,24 @@ import './scss/styles.scss';
 import {cloneTemplate, ensureElement} from './utils/utils';
 import {apiProducts} from './utils/data.ts';
 import {API_URL} from './utils/constants.ts';
-import {Card} from './components/Card.ts';
+import {Card} from './components/base/Card.ts';
 import {Products} from './components/base/Models/Products.ts'
 import {Basket} from './components/base/Models/Basket.ts'
 import {Buyer} from './components/base/Models/Buyer.ts'
 import {Api} from './components/base/Api.ts'
 import {Requests} from './components/base/Api.ts'
 
+import {Page} from './components/base/Page.ts'
 
-const list = new Products();
+const events = new EventEmitter();
+
+
+const page = new Page(document.body, events);
+
+
 
 const buyer = new Buyer();
-
 const productsFromServer = new Products()
-const newBascet = new Basket();
 const api = new Api(API_URL);
 const testApi = new Requests(api);
 const products = testApi.getGoods();
@@ -53,19 +57,18 @@ start.replaceChildren(...items)
 
 
 
-
+// Отображение модального окна карточки товара
 
 import {IProduct} from './types/index.ts';
 
-import {Popup} from './components/Popup.ts';
+import {Popup} from './components/base/Popup.ts';
 import { EventEmitter } from './components/base/Events.ts';
-const events = new EventEmitter();
 const modal = new Popup(ensureElement<HTMLElement>('#modal-container'), events);
 const cardPreviewTemplate = ensureElement<HTMLTemplateElement>('#card-preview');
 
 
 events.on('preview:change', (items: IProduct) => {
-  // console.log(items)
+//   console.log(items)
 	const view = new Card(cloneTemplate(cardPreviewTemplate), {
 		onClick: () => {
 			if (!items.inCart) {
@@ -90,5 +93,76 @@ events.on('preview:change', (items: IProduct) => {
 
 
   
-	// page.locked = true;
+	page.locked = true;
+});
+
+// Разблокировка скролла при закрытии модального окна
+events.on('modal:close', () => {
+	page.locked = false;
+});
+
+
+// КОРЗИНА
+import {BasketPopup} from './components/base/BasketPopup.ts'
+
+const basketTemplate = ensureElement<HTMLTemplateElement>('#basket');
+const shoppingCart = new BasketPopup(cloneTemplate(basketTemplate), events);
+
+
+const basket = new Basket({}, events);
+
+// Добавление товара в корзину
+events.on('Card:add', (item: IProduct) => {
+	item.inCart = true;
+	basket.addToShoppingCart(item);
+	modal.close();
+});
+
+// Удаление товара из корзины
+events.on('Card:remove', (item: IProduct) => {
+	item.inCart = false;
+	basket.removeFromShoppingCart(item);
+	modal.close();
+});
+
+
+// Отображение модального окна корзины
+events.on('shoppingCart:select', () => {
+	// Активируем кнопку "Оформить" если в корзину добавлен товар
+	shoppingCart.buttonToggler = basket.getItems().map(item => item.id); 
+	modal.render({
+		setContent: shoppingCart.render({
+			total: basket.countItems(),
+		}),
+	});
+	page.locked = true;
+});
+
+
+
+const cardInBaskerTemplate = ensureElement<HTMLTemplateElement>('#card-basket');
+
+// Изменение наполнения корзины
+events.on('shoppingCart:change', () => {
+	page.counter = basket.countItems();
+	shoppingCart.total = basket.countItems();
+	shoppingCart.items = basket.getItems().map((item, cartItemIndex) => {
+		const card = new Card(cloneTemplate(cardInBaskerTemplate), {
+			onClick: () => {
+				events.emit('cardInShoppingCart:remove', item);
+				// Проверяем, не пора ли блокировать кнопку, если в корзине не осталось товаров
+				shoppingCart.buttonToggler = basket.getItems().map((item) => item.id)
+			},
+		});
+		return card.render({
+			cartItemIndex: cartItemIndex + 1,
+			title: item.title,
+			price: item.price,
+		});
+	});
+});
+
+// Событие удаления карточки товара из корзины без закрытия модального окна корзины
+events.on('cardInShoppingCart:remove', (item: IProduct) => {
+	basket.removeFromShoppingCart(item);
 });

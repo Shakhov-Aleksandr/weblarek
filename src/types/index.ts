@@ -15,6 +15,7 @@ export interface IProduct {
   category: string;
   price: number | null;
   inCart?: boolean;
+  cartItemIndex: number
 }
 
 export interface IBascet {

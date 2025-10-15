@@ -1,13 +1,16 @@
 import {IProduct} from '../../../types/index.ts';
 
 
-export class Products  {
 
+export class Products{
+    preview: string | null = ''; 
     protected goodsOnSite: IProduct[] = [];
     protected goodPresentation?: IProduct;
     
+    
     setItems(goods: IProduct[]) {
         this.goodsOnSite = goods;
+
     }
 
     getItems(): IProduct[] {
@@ -32,5 +35,7 @@ export class Products  {
         }
         return this.goodPresentation;
     }
+
+
 
 }

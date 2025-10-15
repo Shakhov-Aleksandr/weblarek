@@ -1,6 +1,6 @@
-import {IProduct} from '../types/index.ts';
-import {ensureElement} from '../utils/utils.ts'
-import {Component} from './base/Component.ts';
+import {IProduct} from '../../types/index.ts';
+import {ensureElement} from '../../utils/utils.ts'
+import {Component} from './Component.ts';
 
 
 
@@ -76,7 +76,7 @@ export class Card extends Component<IProduct> {
 	set category(value: string) {
 		// console.log(value)
 		this.setText(this.cardCategory, value);
-		console.log(value !== 'софт-скил')
+		// console.log(value !== 'софт-скил')
 		// if (value == 'софт-скил')
 		this.toggleClass(this.cardCategory, this.Category[value], true);
 	}
