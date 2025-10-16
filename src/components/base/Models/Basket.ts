@@ -1,28 +1,16 @@
-import {IProduct, IBascet, } from '../../../types/index.ts';
+import {IProduct, IBascet } from '../../../types/index.ts';
+import {Model} from '../Model.ts';
+import {IModelData} from '../../../types/index.ts';
 
-import { IEvents } from '../Events.ts';
 
-// Базовая модель
-export abstract class Model<T> {
-	constructor(data: Partial<T>, protected events: IEvents) {
-		Object.assign(this, data);
-	}
 
-	emitChanges(event: string, payload?: object) {
-		this.events.emit(event, payload ?? {});
-	}
-}
 
-export interface IModelData {
-	catalog: IProduct[];
-	shoppingCart: string[];
-	preview: string | null;
-}
+
 
 export class Basket extends Model<IModelData> {
     private goods: IProduct[] = [];
     preview: string | null = ""; 
-shoppingCart: IProduct[] = [];
+    shoppingCart: IProduct[] = [];
 
     setItem(good: IProduct) {
         this.goods.push(good);

@@ -18,7 +18,7 @@ const page = new Page(document.body, events);
 
 
 
-const buyer = new Buyer();
+const buyer = new Buyer({}, events);
 const productsFromServer = new Products()
 const api = new Api(API_URL);
 const testApi = new Requests(api);
@@ -166,3 +166,88 @@ events.on('shoppingCart:change', () => {
 events.on('cardInShoppingCart:remove', (item: IProduct) => {
 	basket.removeFromShoppingCart(item);
 });
+
+
+import {UserContactsForm} from "./components/base/UserContacts.ts"
+
+import {UserDataForm} from "./components/base/userDataForm.ts"
+
+const userDataTemplate = ensureElement<HTMLTemplateElement>('#order');
+const userContactsTemplate = ensureElement<HTMLTemplateElement>('#contacts');
+const userData = new UserDataForm(cloneTemplate(userDataTemplate), events);
+const userContacts = new UserContactsForm(cloneTemplate(userContactsTemplate),events);
+
+// Отображение модального окна формы ввода способа оплаты и адреса доставки
+events.on('goToOrder:submit', () => {
+	modal.render({
+		setContent: userData.render({
+			valid: false,
+			errors: [],
+			payment: '',
+			address: '',
+		}),
+	});
+});
+
+
+// отображение модального окна формы ввода электронной почты и номера телефона
+events.on('order:submit', () => {
+	modal.render({
+		setContent: userContacts.render({
+			valid: false,
+			errors: [],
+			phone: '',
+			email: '',
+		}),
+	});
+});
+
+export interface IUserDataForm {
+	payment: string;
+	address: string;
+}
+
+
+// Изменилось состояние валидации формы ввода способа оплаты и адреса доставки
+events.on('UserDataFormErrors:change', (errors: Partial<IUserDataForm>) => {
+	const { address, payment } = errors;
+	userData.valid = !payment && !address;
+	userData.errors = Object.values({ payment, address })
+		.filter((i) => !!i)
+		.join('; ');
+});
+
+// Изменилось одно из полей формы ввода способа оплаты и адреса доставки
+events.on(
+	/^order\..*:change/,
+	(data: { field: keyof IUserDataForm; value: string }) => {
+		buyer.setUserDataField(data.field, data.value);
+	}
+);
+
+export interface IUserContactsForm {
+	email: string;
+	phone: string;
+}
+
+// Изменилось состояние валидации формы ввода электронной почты и номера телефона
+events.on(
+	'UserContactsFormErrors:change',
+	(errors: Partial<IUserContactsForm>) => {
+		const { email, phone } = errors;
+		userContacts.valid = !email && !phone;
+		userContacts.errors = Object.values({ email, phone })
+			.filter((i) => !!i)
+			.join('; ');
+	}
+);
+
+
+
+// Изменилось одно из полей формы электронной почты и номера телефона
+events.on(
+	/^contacts\..*:change/,
+	(data: { field: keyof IUserContactsForm; value: string }) => {
+		buyer.setUserContactsField(data.field, data.value);
+	}
+);

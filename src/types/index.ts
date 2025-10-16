@@ -7,6 +7,34 @@ export interface IApi {
     post<T extends object>(uri: string, data: object, method?: ApiPostMethods): Promise<T>;
 }
 
+
+export interface IModelData {
+	catalog: IProduct[];
+	shoppingCart: string[];
+	preview: string | null;
+}
+
+// Интерфейс, описывающий объект заказа, передаваемый на сервер
+export interface IOrder {
+	payment: string;
+	email: string;
+	phone: string;
+	address: string;
+	total: number;
+	items: string[];
+}
+
+export interface IUserDataForm {
+	payment: string;
+	address: string;
+}
+
+export interface IUserContactsForm {
+	email: string;
+	phone: string;
+}
+
+
 export interface IProduct {
   id: string;
   description: string;
